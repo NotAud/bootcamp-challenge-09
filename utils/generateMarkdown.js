@@ -11,7 +11,7 @@ function renderLicenseSection(license) {
 }
 
 function renderTableOfContents(data) {
-  const possibleSections = ["installation", "credits", "license", "badges"];
+  const possibleSections = ["installation", "usage", "credits"];
 
   let tableOfContents = "## Table of Contents\n";
   for (const key in data) {
@@ -37,9 +37,9 @@ export function generateMarkdown(data) {
     description,
     hasTableOfContents,
     installation,
+    usage,
     credits,
     license,
-    badges,
   } = data;
   let markdown = `# ${title}\n\n`;
 
@@ -50,9 +50,9 @@ export function generateMarkdown(data) {
   }
 
   markdown += renderOptionalSection("Installation", installation);
+  markdown += renderOptionalSection("Usage", usage);
   markdown += renderOptionalSection("Credits", credits);
   markdown += renderLicenseSection(license);
-  markdown += renderOptionalSection("Badges", badges);
 
   return markdown;
 }
