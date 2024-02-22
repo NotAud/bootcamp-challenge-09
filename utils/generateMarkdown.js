@@ -1,28 +1,26 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-function renderLicenseBadge(license) {}
+import licenses from "./licenses.json" assert { type: "json" };
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-function renderLicenseLink(license) {}
+function renderLicenseSection(license) {
+  if (!license) {
+    return "";
+  }
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-function renderLicenseSection(license) {}
+  const licenseInfo = licenses[license];
 
-// TODO: Create a function to generate markdown for README
-export function generateMarkdown(data) {
-  console.log(data);
-  const { title, description, installation, credits, license, badges } = data;
-  let markdown = `# ${title}`;
+  return `## License\n[![License](${licenseInfo.badge})](${licenseInfo.url})\n\n`;
+}
 
-  markdown += renderOptionalSection("Description", description);
-  markdown += renderOptionalSection("Installation", installation);
-  markdown += renderOptionalSection("Credits", credits);
-  markdown += renderOptionalSection("License", license);
-  markdown += renderOptionalSection("Badges", badges);
+function renderTableOfContents(data) {
+  const possibleSections = ["installation", "credits", "license", "badges"];
 
-  return markdown;
+  let tableOfContents = "## Table of Contents\n";
+  for (const key in data) {
+    if (possibleSections.includes(key)) {
+      tableOfContents += `  - [${key}](#${key.toLowerCase()})\n`;
+    }
+  }
+
+  return (tableOfContents += "\n");
 }
 
 function renderOptionalSection(title, value) {
@@ -30,8 +28,31 @@ function renderOptionalSection(title, value) {
     return "";
   }
 
-  return `
-  ## ${title}
-  ${value}
-  `;
+  return `## ${title}\n${value}\n\n`;
+}
+
+export function generateMarkdown(data) {
+  const {
+    title,
+    description,
+    hasTableOfContents,
+    installation,
+    credits,
+    license,
+    badges,
+  } = data;
+  let markdown = `# ${title}\n\n`;
+
+  markdown += renderOptionalSection("Description", description);
+
+  if (hasTableOfContents) {
+    markdown += renderTableOfContents(data);
+  }
+
+  markdown += renderOptionalSection("Installation", installation);
+  markdown += renderOptionalSection("Credits", credits);
+  markdown += renderLicenseSection(license);
+  markdown += renderOptionalSection("Badges", badges);
+
+  return markdown;
 }
