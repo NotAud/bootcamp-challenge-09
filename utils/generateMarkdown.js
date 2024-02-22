@@ -1,5 +1,6 @@
 import licenses from "./licenses.json" assert { type: "json" };
 
+// Generate license badge / link
 function renderLicenseSection(license) {
   if (!license) {
     return "";
@@ -10,10 +11,14 @@ function renderLicenseSection(license) {
   return `## License\n[![License](${licenseInfo.badge})](${licenseInfo.url})\n\n`;
 }
 
+// Generate Table of Contents
 function renderTableOfContents(data) {
+  // Possible sections that can be generated if they exist in the data
   const possibleSections = ["installation", "usage", "credits"];
 
   let tableOfContents = "## Table of Contents\n";
+
+  // Generate a table of contents entry for each section that exists in the data
   for (const key in data) {
     if (possibleSections.includes(key) && data[key]) {
       tableOfContents += `  - [${
@@ -22,9 +27,11 @@ function renderTableOfContents(data) {
     }
   }
 
+  // Add a newline after the table of contents
   return (tableOfContents += "\n");
 }
 
+// Render optional section
 function renderOptionalSection(title, value) {
   if (!value) {
     return "";
@@ -34,6 +41,7 @@ function renderOptionalSection(title, value) {
 }
 
 export function generateMarkdown(data) {
+  // Destructure data
   const {
     title,
     description,
@@ -47,6 +55,7 @@ export function generateMarkdown(data) {
 
   markdown += renderOptionalSection("Description", description);
 
+  // Table of contents is optional, so only render if it's requested
   if (hasTableOfContents) {
     markdown += renderTableOfContents(data);
   }

@@ -5,6 +5,7 @@ import licenses from "./utils/licenses.json" assert { type: "json" };
 
 const licenseChoices = Object.keys(licenses);
 
+// Questions for inquirer prompt
 const questions = [
   {
     type: "input",
@@ -49,6 +50,7 @@ const questions = [
   },
 ];
 
+// Function to write markdown to file
 function writeToFile(fileName, data) {
   fs.writeFile(fileName, data, (err) =>
     err ? console.error(err) : console.log("Markdown file generated!")
@@ -56,10 +58,14 @@ function writeToFile(fileName, data) {
 }
 
 function init() {
+  // Start inquirer prompt
   inquirer
     .prompt(questions)
     .then((answers) => {
+      // Generate markdown from answers
       const markdown = generateMarkdown(answers);
+
+      // Write to file
       writeToFile("README.md", markdown);
     })
     .catch((err) => console.error(err));
