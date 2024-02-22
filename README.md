@@ -6,9 +6,8 @@ Allows you to generate a README through a nodejs command line prompt system.
 
 ## Table of Contents
 
-- [installation](#installation)
-- [credits](#credits)
-- [license](#license)
+- [Installation](#installation)
+- [License](#license)
 
 ## Installation
 
