@@ -15,8 +15,10 @@ function renderTableOfContents(data) {
 
   let tableOfContents = "## Table of Contents\n";
   for (const key in data) {
-    if (possibleSections.includes(key)) {
-      tableOfContents += `  - [${key}](#${key.toLowerCase()})\n`;
+    if (possibleSections.includes(key) && data[key]) {
+      tableOfContents += `  - [${
+        key.charAt(0).toUpperCase() + key.slice(1)
+      }](#${key.toLowerCase()})\n`;
     }
   }
 
